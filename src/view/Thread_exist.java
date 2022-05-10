@@ -7,7 +7,7 @@ public class Thread_exist implements Runnable {
                 "Biệt ", "Các ", "Bạn, ", "Hẹn ", "Gặp ", "Lại !!!!"};
         for (int i = 0; i < string.length; i++) {
             try {
-                Thread.sleep(300);
+                Thread.sleep(200);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

@@ -2,7 +2,9 @@ package model;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Date;
+import java.util.Locale;
 
 public class OrderProduct {
     private int idProduct;
@@ -11,13 +13,14 @@ public class OrderProduct {
     private int quantity;
     private int price;
     private int total;
+//    private LocalDate create_at;
 //    private long create_at;
 //    SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 
     public OrderProduct() {
     }
 
-    public OrderProduct(int idOrder, int idProduct, String name, int price , int quantity, int total) {
+    public OrderProduct(int idOrder, int idProduct, String name, int price, int quantity, int total) {
 //        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 //        Date date = new Date();
 //        System.out.println(formatter.format(date));
@@ -27,7 +30,7 @@ public class OrderProduct {
         this.price = price;
         this.quantity = quantity;
         this.total = total;
-//        this.create_at = create_at;
+//        this.create_at = LocalDate.now();
     }
 
     public OrderProduct(int idProduct, String name, int price, int quantity, int total) {
@@ -39,9 +42,9 @@ public class OrderProduct {
     }
 
     public OrderProduct(String record) {
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-        Date date = new Date();
-        System.out.println(formatter.format(date));
+//        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+//        Date date = new Date();
+//        System.out.println(formatter.format(date));
         String[] fields = record.split(",");
         this.idOrder = Integer.parseInt(fields[0]);
         this.idProduct = Integer.parseInt(fields[1]);
@@ -49,7 +52,7 @@ public class OrderProduct {
         this.price = Integer.parseInt(fields[3]);
         this.quantity = Integer.parseInt(fields[4]);
         this.total = Integer.parseInt(fields[5]);
-
+//        this.create_at = LocalDate.parse(fields[6]);
     }
 
     public int getIdProduct() {
@@ -100,8 +103,13 @@ public class OrderProduct {
         this.total = total;
     }
 
+//    public LocalDate getCreate_at() {
+//        return create_at;
+//    }
+
     @Override
     public String toString() {
+//        return idOrder + "," + idProduct + "," + name + "," + price + "," + quantity + "," + total + "," + create_at;
         return idOrder + "," + idProduct + "," + name + "," + price + "," + quantity + "," + total;
     }
 }

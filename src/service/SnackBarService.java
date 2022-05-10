@@ -97,30 +97,29 @@ public class SnackBarService implements ISnackBarService {
 
     @Override
     public SnackBar unlockSnackBar(int id) {
-        List<SnackBar> snackBarList = getSnackBar();
-        List<SnackBar> unlockSnackBarlist = getLockProduct();
-        SnackBar unLockSnackBar = null;
-        for (SnackBar snackBar : snackBarList) {
+        List<SnackBar> userList = getSnackBar();
+        List<SnackBar> userLockList = getLockProduct();
+        for (SnackBar snackBar : userLockList) {
             if (snackBar.getId() == id) {
-                unlockSnackBarlist.remove(snackBar);
-                unLockSnackBar = snackBar;
-                break;
-            }
-            snackBarList.add(unLockSnackBar);
-            try {
-                CSVUtils.writeFile(PATH_FILE_SNACKBAR, snackBarList);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            try {
-                CSVUtils.writeFile(PATH_FILE_LOCKPRODUCT, unlockSnackBarlist);
-            } catch (IOException e) {
-                e.printStackTrace();
+                userList.add(snackBar);
+                userLockList.remove(snackBar);
+                try {
+                    CSVUtils.writeFile(PATH_FILE_SNACKBAR, userList);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                try {
+                    CSVUtils.writeFile(PATH_FILE_LOCKPRODUCT, userLockList);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                return snackBar;
             }
         }
-        return unLockSnackBar;
+        return null;
     }
 
+    @Override
     public SnackBar remove(int id) {
         int index = getIndexById(id);
         List<SnackBar> snackBarList = getSnackBar();
@@ -150,7 +149,7 @@ public class SnackBarService implements ISnackBarService {
         return false;
     }
 
-//    public boolean exist(int id){
+    //    public boolean exist(int id){
 //
 //    }
     @Override
@@ -170,6 +169,7 @@ public class SnackBarService implements ISnackBarService {
         return false;
     }
 
+    @Override
     public boolean checkDuplicateIdUnlockProduct(int id) {
         List<SnackBar> snackBarList = getSnackBar();
         List<SnackBar> lockSnackBarList = getLockProduct();

@@ -3,13 +3,14 @@ package view;
 public class Thread_Login implements Runnable{
     @Override
     public void run() {
-        String a = "XIN";
-        String b = " CHÀO";
+
+        String a = " CHÀO";
+        String b = "MỪNG";
         String c = " CÁC";
         String d = " BẠN";
         String e = " ĐÃ";
-        String f = " GHÉ";
-        String g = " THĂM";
+        String f = " ĐẾN";
+        String g = " VỚI";
         String h = " CỬA";
         String ti = " HÀNG";
         String tut = " CỦA";
@@ -18,7 +19,7 @@ public class Thread_Login implements Runnable{
 
         for (int i = 0; i< list.length;i++ ){
             try {
-                Thread.sleep(300);
+                Thread.sleep(200);
             } catch (InterruptedException ex) {
                 ex.printStackTrace();
             }

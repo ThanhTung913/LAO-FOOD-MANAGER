@@ -8,7 +8,7 @@ public interface IOrderItemService {
     List <OrderProduct> getOrderService();
     void add(OrderProduct order);
 
-    OrderProduct remove(String name);
+    OrderProduct remove(int id);
 
     boolean checkDuplicateId(int id);
 

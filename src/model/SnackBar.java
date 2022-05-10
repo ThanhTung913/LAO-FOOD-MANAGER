@@ -1,11 +1,14 @@
 package model;
 
+import java.time.LocalDate;
+
 public class SnackBar {
     private int id;
     private String name;
     private int price;
     private int quantity;
     private String detail;
+//    private LocalDate create_at;
 
     public SnackBar() {
     }
@@ -16,6 +19,7 @@ public class SnackBar {
         this.price = price;
         this.quantity = quantity;
         this.detail = state;
+//        this.create_at = LocalDate.now();
     }
 
     public SnackBar(String record) {
@@ -25,6 +29,7 @@ public class SnackBar {
         this.price = Integer.parseInt(filder[2]);
         this.quantity = Integer.parseInt(filder[3]);
         this.detail = filder[4];
+//        this.create_at = LocalDate.parse(filder[5]);
     }
 
     public int getId() {
@@ -67,8 +72,13 @@ public class SnackBar {
         this.detail = detail;
     }
 
+//    public LocalDate getCreate_at() {
+//        return create_at;
+//    }
+
     @Override
     public String toString() {
+//        return id + "," + name + "," + price + "," + quantity + "," + detail + "," + create_at;
         return id + "," + name + "," + price + "," + quantity + "," + detail;
     }
 }

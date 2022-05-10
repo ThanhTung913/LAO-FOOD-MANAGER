@@ -93,7 +93,7 @@ public class MenuAndDisplay {
     }
 
 
-// MENU AND DISPLAY MANGER PRODUCT
+    // MENU AND DISPLAY MANGER PRODUCT
     public void disPlayProductLock() {
         List<SnackBar> snackBarList = snackBarService.getLockProduct();
         System.out.println("|-----------------------------------------------------------------------------------------|");
@@ -137,36 +137,36 @@ public class MenuAndDisplay {
     }
 
 
-//    MENU AND DISPLAY MANAGER USER
-public void SetRole(User newUser) {
-    int option = -1;
-    do {
-        try {
-            System.out.println("|________________________|");
-            System.out.println("|        SET ROLE        |");
-            System.out.println("|________________________|");
-            System.out.println("|       1. ADMIN         |");
-            System.out.println("|       2. USER          |");
-            System.out.println("|________________________|");
-            System.out.println("Chọn role: ");
-            option = Integer.parseInt(scanner.nextLine());
-            switch (option) {
-                case 1:
-                    newUser.setRole(Role.ADMIN);
-                    break;
-                case 2:
-                    newUser.setRole(Role.USER);
-                    break;
-                default:
-                    System.out.println("Nhập không đúng, vui lòng nhập lại");
-                    break;
-            }
+    //    MENU AND DISPLAY MANAGER USER
+    public void SetRole(User newUser) {
+        int option = -1;
+        do {
+            try {
+                System.out.println("|________________________|");
+                System.out.println("|        SET ROLE        |");
+                System.out.println("|________________________|");
+                System.out.println("|       1. ADMIN         |");
+                System.out.println("|       2. USER          |");
+                System.out.println("|________________________|");
+                System.out.println("Chọn role: ");
+                option = Integer.parseInt(scanner.nextLine());
+                switch (option) {
+                    case 1:
+                        newUser.setRole(Role.ADMIN);
+                        break;
+                    case 2:
+                        newUser.setRole(Role.USER);
+                        break;
+                    default:
+                        System.out.println("Nhập không đúng, vui lòng nhập lại");
+                        break;
+                }
 
-        } catch (Exception e) {
-            System.out.println("Nhập không đúng, vui lòng nhập lại");
-        }
-    } while (option != 1 && option != 2);
-}
+            } catch (Exception e) {
+                System.out.println("Nhập không đúng, vui lòng nhập lại");
+            }
+        } while (option != 1 && option != 2);
+    }
 
     public void searchUserByName() {
         System.out.print("Nhập tên người dùng bạn muốn tìm kiếm: ");

@@ -14,6 +14,8 @@ public interface IUserService {
 
     User updateUser(int idUser, User user);
 
+    List<User> getUserLock();
+
     User lockUser(String userName);
 
     User unblockUser(String userName);

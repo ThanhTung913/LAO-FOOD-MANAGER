@@ -1,9 +1,11 @@
 package view;
 
+import Utils.ValidateUtils;
 import model.SnackBar;
 import service.SnackBarService;
 
 import java.text.DecimalFormat;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Scanner;
 
@@ -13,23 +15,23 @@ public class ProductMangerView {
     DecimalFormat decimalFormat = new DecimalFormat("###,###,###" + " VND");
     MenuAndDisplay menuAndDisplay = new MenuAndDisplay();
 
+
     public static void main(String[] args) {
         ProductMangerView productMangerView = new ProductMangerView();
         productMangerView.showManagerProduct();
     }
 
     public void showManagerProduct() {
-        int choice = -1;
+        int number = -1;
         do {
             try {
                 menuAndDisplay.menuManagerProduct();
-                System.out.println("Chọn chức năng: ");
-                System.out.print("==> ");
-                choice = Integer.parseInt(scanner.nextLine());
+                System.out.print("Chọn lựa chọn bạn muốn làm: ");
+                number = Integer.parseInt(scanner.nextLine());
             } catch (Exception e) {
-                System.out.println("Nhập sai, vui lòng nhập lại.");
+                System.out.println("Nhập không đúng kiểu dữ liệu, vui lòng nhập lại!!!");
             }
-            switch (choice) {
+            switch (number) {
                 case 1:
                     add();
                     break;
@@ -49,14 +51,12 @@ public class ProductMangerView {
                     menuAndDisplay.searchByName();
                     break;
                 case 0:
-                    System.out.println("back");
-                    menuAndDisplay.mainMenu();
                     break;
                 default:
                     System.out.println("Nhập sai, mời nhập lại!!!");
                     break;
             }
-        } while (choice != -1);
+        } while (number != 0);
     }
 
     //    ADDDDDDDDD VÀOOOOOOOOOOOOOOOOO
@@ -71,21 +71,20 @@ public class ProductMangerView {
         do {          // check id add
             try {
                 check = false;
-                System.out.println("Nhập ID bạn muốn thêm hoặc nhập 'hai' để quay xe");
+                System.out.println("Nhập ID bạn muốn thêm");
                 System.out.print("==>");
-                String temp = scanner.nextLine();
-                if (temp.equals("hai")) {
-                    System.out.println("|-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-|");
-                    System.out.println("|    NHẤN  'b' ĐỂ THÊM SẢN PHẨM               |");
-                    quayXe();
-                } else {
-
+//                String temp = scanner.nextLine();
+//                if (temp.equals("hai")) {
+//                    System.out.println("|-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-|");
+//                    System.out.println("|    NHẤN  'b' ĐỂ THÊM SẢN PHẨM               |");
+//                    quayXeProduct();
+//                } else {
                     id = getIdAdd();
                     if (snackBarService.checkDuplicateId(id)) {
                         System.out.println("ID sản phẩm đã tồn tại, vui lòng nhập lại");
                         check = true;
                     }
-                }
+//                }
             } catch (Exception e) {
                 System.out.println("ID không hợp lệ, vui lòng nhập lại");
                 check = true;
@@ -105,7 +104,10 @@ public class ProductMangerView {
                 if (snackBarService.checkDuplicateName(newNameProduct)) {
                     System.out.println("Tên sản phẩm đã tồn tại, vui lòng nhập lại");
                     check = true;
+                } else if (newNameProduct == null) {
+                    System.out.println("Tên không được để trống, vui lòng nhập lại");
                 }
+                ;
             } catch (Exception e) {
                 System.out.println("Tên sản phẩm không hợp lệ, vui lòng nhập lại");
             }
@@ -122,7 +124,7 @@ public class ProductMangerView {
                 if (temp.equals("hai")) {
                     System.out.println("|-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-|");
                     System.out.println("|    NHẤN  'b' ĐỂ THÊM SẢN PHẨM               |");
-                    quayXe();
+                    quayXeProduct();
                 }
                 price = Integer.parseInt(temp);
                 if (price < 10000) {
@@ -144,7 +146,7 @@ public class ProductMangerView {
                 if (temp.equals("hai")) {
                     System.out.println("|-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-|");
                     System.out.println("|    NHẤN  'b' ĐỂ THÊM SẢN PHẨM               |");
-                    quayXe();
+                    quayXeProduct();
                 }
                 quantity = Integer.parseInt(temp);
                 if (quantity < 0) {
@@ -159,14 +161,13 @@ public class ProductMangerView {
 
         String detail = "";
         do {
-
             check = false;
             System.out.println("Thêm mô tả sản phẩm hoặc nhập 'hai' để quay xe ");
             String temp = scanner.nextLine();
             if (temp.equals("hai")) {
                 System.out.println("|-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-|");
                 System.out.println("|    NHẤN  'b' ĐỂ THÊM SẢN PHẨM               |");
-                quayXe();
+                quayXeProduct();
                 check = false;
             }
             detail = temp;
@@ -222,45 +223,45 @@ public class ProductMangerView {
                                 option = Integer.parseInt(scanner.nextLine());
                                 SnackBar snackBar = snackBarService.getById(id);
                                 switch (option) {
-                                    case 1:
-                                        String temp = scanner.nextLine();
-                                        name = getNameUpdate();
-                                        snackBar.setName(name);
-                                        snackBarService.update(id, snackBar);
-                                        System.out.println("Sửa tên sản phẩm thành công!!!");
-                                        String updateNameProduct = null;
-                                        do {
-                                            try {
-                                                System.out.println("Nhấn 'c' để tiếp tục sửa");
-                                                System.out.println("     'b' để quay lại ");
-                                                System.out.println("     'q' để thoát chương trình");
-                                                updateNameProduct = scanner.nextLine();
-                                                switch (updateNameProduct) {
-                                                    case "c":
-                                                        updateProduct();
-                                                        break;
-                                                    case "b":
-                                                        showManagerProduct();
-                                                        break;
-                                                    case "p":
-                                                        Thread_exist thread_exist = new Thread_exist();
-                                                        Thread thread1 = new Thread(thread_exist);
-                                                        thread1.start();
-                                                        try {
-                                                            Thread.sleep(3000);
-                                                        } catch (InterruptedException e) {
-                                                            e.printStackTrace();
-                                                        }
-                                                        break;
-                                                    default:
-                                                        System.out.println("Không có chức năng, vui lòng nhập lại");
-                                                }
-                                            } catch (Exception e) {
-                                                System.out.println("Nhấn không hợp lệ, vui lòng nhập lại!!");
-                                            }
-
-                                        } while (updateNameProduct != null);
-                                        break;
+//                                    case 1:
+////                                        String temp = scanner.nextLine();
+//                                        name = getNameUpdate();
+//                                        snackBar.setName(name);
+//                                        snackBarService.update(id, snackBar);
+//                                        System.out.println("Sửa tên sản phẩm thành công!!!");
+//                                        String updateNameProduct = null;
+//                                        do {
+//                                            try {
+//                                                System.out.println("Nhấn 'c' để tiếp tục sửa");
+//                                                System.out.println("     'b' để quay lại ");
+//                                                System.out.println("     'q' để thoát chương trình");
+//                                                updateNameProduct = scanner.nextLine();
+//                                                switch (updateNameProduct) {
+//                                                    case "c":
+//                                                        updateProduct();
+//                                                        break;
+//                                                    case "b":
+//                                                        showManagerProduct();
+//                                                        break;
+//                                                    case "p":
+//                                                        Thread_exist thread_exist = new Thread_exist();
+//                                                        Thread thread1 = new Thread(thread_exist);
+//                                                        thread1.start();
+//                                                        try {
+//                                                            Thread.sleep(3000);
+//                                                        } catch (InterruptedException e) {
+//                                                            e.printStackTrace();
+//                                                        }
+//                                                        break;
+//                                                    default:
+//                                                        System.out.println("Không có chức năng, vui lòng nhập lại");
+//                                                }
+//                                            } catch (Exception e) {
+//                                                System.out.println("Nhấn không hợp lệ, vui lòng nhập lại!!");
+//                                            }
+//
+//                                        } while (updateNameProduct != null);
+//                                        break;
                                     case 2:
                                         price = getPriceUpdate();
                                         snackBar.setPrice(price);
@@ -378,45 +379,12 @@ public class ProductMangerView {
                                         break;
                                     default:
                                         System.out.println("Không có chức năng, vui lòng nhập lại!!");
+                                        break;
                                 }
 
                             } catch (Exception e) {
                                 System.out.println("Nhập không hợp lệ, vui lòng nhập lại!!");
                             }
-                            String backUpdate = null;
-                            do {
-                                try {
-                                    System.out.println("Nhấn 'c' để tiếp tục sửa");
-                                    System.out.println("     'b' để quay lại ");
-                                    System.out.println("     'q' để thoát chương trình");
-                                    backUpdate = scanner.nextLine();
-                                    switch (backUpdate) {
-                                        case "c":
-                                            updateProduct();
-                                            break;
-                                        case "b":
-                                            showManagerProduct();
-                                            break;
-                                        case "q":
-                                            Thread_exist thread_exist = new Thread_exist();
-                                            Thread thread1 = new Thread(thread_exist);
-                                            thread1.start();
-                                            try {
-                                                Thread.sleep(3000);
-                                            } catch (InterruptedException e) {
-                                                e.printStackTrace();
-                                            }
-                                            break;
-                                        default:
-                                            System.out.println("Không có chức năng, vui lòng nhập lại");
-                                    }
-                                } catch (Exception e) {
-                                    System.out.println("Nhấn không hợp lệ, vui lòng nhập lại!!");
-                                }
-
-                            } while (backUpdate != null);
-
-
                         } while (option != -1);
                     }
 
@@ -512,48 +480,49 @@ public class ProductMangerView {
         menuAndDisplay.disPlayProductLock();
     }
 
-    //        Mở Khóa sản phẩm
+//            Mở Khóa sản phẩm
     public void unlockProduct() {
-        if (snackBarService.getLockProduct().size() == 0) {
-            System.out.println("KHÔNG CÓ SẢN PHẨM NÀO BỊ KHÓA, VUI LÒNG NHẬP LẠI");
+        int id;
+        List<SnackBar> userListLock = snackBarService.getLockProduct();
+        if (userListLock.size() == 0) {
+            System.out.println("Hiện không có sản phẩm nào bị khóa");
+            System.out.println("Nhấn phím bất kì để quay lại!!!");
             return;
         }
-        int id = 0;
-        boolean check = false;
+        do {
+            System.out.print("Nhập ID sản phẩm bạn muốn mở khóa: ");
+            id = Integer.parseInt(scanner.nextLine());
+            if (!snackBarService.checkDuplicateId(id)) {
+                System.out.println("ID này chưa tồn tại, vui lòng nhập lại tên khác!!!");
+            }
+        } while (!snackBarService.checkDuplicateId(id));
+
+        int option = 0;
         do {
             try {
-                check = false;
-                menuAndDisplay.disPlayProductLock();
-                System.out.println("Nhập ID bạn muốn mở khóa");
-                System.out.print("==> ");
-                id = Integer.parseInt(scanner.nextLine());
-                if (!snackBarService.checkDuplicateId(id)) {
-                    System.out.println("ID không tồn tại, vui lòng nhập lại!!");
-                    check = true;
-                }
-                if (snackBarService.checkDuplicateIdUnlockProduct(id)) {
-                    System.out.println("Sản phẩm chưa bị khóa, vui lòng chọn lại!!!");
-                    check = true;
-                }
-                List<SnackBar> lockProductList = snackBarService.getLockProduct();
-                SnackBar lockSnackBar = null;
-                for (SnackBar snackBar : lockProductList) {
-                    if (snackBar.getId() == id) {
-                        lockSnackBar = snackBar;
+                System.out.println("Nhập '1' nếu bạn chắc chắn muốn mở khóa, nhập '2' để quay lại");
+                option = Integer.parseInt(scanner.nextLine());
+                switch (option) {
+                    case 1:
+                        SnackBar unlockProduct = snackBarService.unlockSnackBar(id);
+                      menuAndDisplay.disPlayProductLock();
+                        System.out.println("Bạn đã mở khóa thành công!!!");
                         break;
-                    }
+                    case 2:
+                        break;
+                    default:
+                        System.out.println("Chọn không đúng chức năng, chọn lại");
+                        break;
                 }
-                lockProductList.remove(id);
-                snackBarService.update(id, lockSnackBar);
-
             } catch (Exception e) {
-                System.out.println("Nhập không đúng, vui lòng nhập lại");
-                check = true;
+                System.out.println("Nhập sai dữ liệu, mời nhập lại!!!!");
             }
-        } while (check = false);
+        } while (option != 2 && option != 1);
     }
 
-    public void quayXe() {
+
+
+    public void quayXeProduct() {
         String choice = null;
         do {
             System.out.println("|          'c' ĐỂ QUAY LẠI QUẢN LÝ SẢN PHẨM   |");
@@ -574,7 +543,15 @@ public class ProductMangerView {
                         loginView.menuLogin();
                         break;
                     case "q":
-
+                        Thread_exist thread_exist = new Thread_exist();
+                        Thread thread1 = new Thread(thread_exist);
+                        thread1.start();
+                        try {
+                            Thread.sleep(3000);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                        break;
                     default:
                         System.out.println("Nhập không đúng cú phảp vui lòng nhập lai");
                 }

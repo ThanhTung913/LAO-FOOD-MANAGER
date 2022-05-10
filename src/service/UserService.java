@@ -28,7 +28,7 @@ public class UserService implements IUserService {
     public List<User> getLockUser() {
         List<String> records = CSVUtils.readFile(PATH_LOCK_USER);
         List<User> lockUserList = new ArrayList<>();
-        for (String record : records){
+        for (String record : records) {
             lockUserList.add(new User(record));
         }
         return lockUserList;
@@ -88,23 +88,23 @@ public class UserService implements IUserService {
     @Override
     public User unblockUser(String userName) {
         List<User> userList = getUserService();
-        List<User> lockUserList = getUserLock();
-        for (User user : userList) {
+        List<User> userLockList = getUserLock();
+        for (User user : userLockList) {
             if (user.getUserName().equals(userName)) {
                 userList.add(user);
-                lockUserList.remove(user);
+                userLockList.remove(user);
+                try {
+                    CSVUtils.writeFile(PATH_USER, userList);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                try {
+                    CSVUtils.writeFile(PATH_LOCK_USER, userLockList);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                return user;
             }
-            try {
-                CSVUtils.writeFile(PATH_USER, userList);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            try {
-                CSVUtils.writeFile(PATH_LOCK_USER, lockUserList);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            return user;
         }
         return null;
     }
@@ -126,7 +126,8 @@ public class UserService implements IUserService {
         return false;
     }
 
-    private List<User> getUserLock() {
+    @Override
+    public List<User> getUserLock() {
         List<String> records = CSVUtils.readFile(PATH_LOCK_USER);
         List<User> lockUserList = new ArrayList<>();
         for (String record : records) {
@@ -261,7 +262,7 @@ public class UserService implements IUserService {
         List<User> userList = getUserService();
         for (User user : userList) {
 //            if (user.getUserName().equals(userName) && user.getPassword().equals(password) && user.getRole().equals(Role.ADMIN)) {
-                if (user.getUserName().equals(userName) && user.getPassword().equals(password)) {
+            if (user.getUserName().equals(userName) && user.getPassword().equals(password)) {
                 return true;
             }
         }

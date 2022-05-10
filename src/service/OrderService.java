@@ -6,11 +6,13 @@ import model.OrderProduct;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class OrderService implements IOrderService {
     OrderItemService orderService = new OrderItemService();
     private static final String PATH_ORDER = "src/data/Order.csv";
+
 
 //    public List<OrderProduct> getAllOrder() {
 //        return orderService.getOrderService();
@@ -81,4 +83,26 @@ public class OrderService implements IOrderService {
         }
         return null;
     }
+
+    public int revenue(){
+        Date date = new Date();
+        System.out.println(date.getTime());
+        return 0;
+    }
+
+//    public static void main(String[] args) {
+//        OrderService orderService = new OrderService();
+//        Date date = new Date();
+//        date.setDate(6);
+//        date.setMonth(5);
+//        date.setYear(2022);
+//        List<Order> orders = orderService.getOrders();
+//        for (Order order : orders){
+//            if (order.getCreate_at().compareTo(date)==0){
+//                System.out.println(order.getIdOrder());
+//                System.out.println(order.toString());
+//            };
+//        }
+
+//    }
 }

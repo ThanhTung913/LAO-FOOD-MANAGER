@@ -19,11 +19,14 @@ public interface ISnackBarService {
 
     SnackBar unlockSnackBar(int id);
 
+    SnackBar remove(int id);
+
     boolean existId(int id);
 
     boolean checkDuplicateId(int id);
 
     boolean checkDuplicateName(String name);
+    boolean checkDuplicateIdUnlockProduct(int id);
 
     List<SnackBar> sortSnackbar();
 

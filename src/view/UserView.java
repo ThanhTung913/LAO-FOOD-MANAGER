@@ -115,7 +115,7 @@ public class UserView {
             String addUserCtn = null;
             do {
                 try {
-                    System.out.println("Nhấn 'c' để tiếp tục sửa");
+                    System.out.println("Nhấn 'c' để tiếp tục thêm");
                     System.out.println("     'b' để quay lại ");
                     System.out.println("     'q' để thoát chương trình");
                     addUserCtn = scanner.nextLine();
@@ -152,6 +152,7 @@ public class UserView {
         int option = -1;
         do {
             try {
+                menuAndDisplay.displayListUser();
                 System.out.print("Nhập id sản phẩm bạn muốn sửa: ");
                 id = Integer.parseInt(scanner.nextLine());
                 if (!userService.checkDuplicateId(id)) {
@@ -257,8 +258,47 @@ public class UserView {
     }
 
     private String getPhoneUser(int flag) {
-        String phone;
+        String phone = null;
         do {
+//            String temp = scanner.nextLine();
+//            if (temp.equals("hai")) {
+//                String choice = null;
+//                do {
+//                    System.out.println("|          'c' ĐỂ QUAY LẠI QUẢN LÝ SẢN PHẨM   |");
+//                    System.out.println("|          'd' ĐỂ QUAY LẠI ĐĂNG NHẬP          |");
+//                    System.out.println("|          'q' ĐỂ THOÁT CHƯƠNG TRÌNH          |");
+//                    System.out.println("|-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-|");
+//                    try {
+//                        choice = scanner.nextLine();
+//                        switch (choice) {
+//                            case "b":
+//                                addUser();
+//                                break;
+//                            case "c":
+//                                showMenuUser();
+//                                break;
+//                            case "d":
+//                                LoginView loginView = new LoginView();
+//                                loginView.menuLogin();
+//                                break;
+//                            case "q":
+//                                Thread_exist thread_exist = new Thread_exist();
+//                                Thread thread1 = new Thread(thread_exist);
+//                                thread1.start();
+//                                try {
+//                                    Thread.sleep(3000);
+//                                } catch (InterruptedException e) {
+//                                    e.printStackTrace();
+//                                }
+//                                break;
+//                            default:
+//                                System.out.println("Nhập không đúng cú phảp vui lòng nhập lai");
+//                        }
+//                    } catch (Exception e) {
+//                        System.out.println("Nhập không hợp lệ, vui lòng nhập lại");
+//                    }
+//                } while (choice != null);
+//            }else {
             if (flag == 1) {
                 System.out.print("Nhập số điện thoại: ");
             }
@@ -270,6 +310,7 @@ public class UserView {
             if (!ValidateUtils.isPhoneValid(phone)) {
                 System.out.println("Số điện thoại không đúng định dạng, vui lòng nhập lại!!!");
             }
+
         } while (!ValidateUtils.isPhoneValid(phone));
 
         return phone;
@@ -346,6 +387,7 @@ public class UserView {
     //Lock User
     private void lockUser() {
         int option = -1;
+        String choice;
         String userName;
         do {
             menuAndDisplay.displayListUser();
@@ -355,11 +397,11 @@ public class UserView {
                 System.out.println("Tên đăng nhập người dùng không tồn tại, vui lòng nhập lại!!!");
             }
         } while (!userService.checkDuplicateUserName(userName));
-        System.out.println("Nhấn '1' nếu bạn chắc chắn muốn khóa hoặc nhấn '2' để quay lại");
+        System.out.println("Nhấn 'y' nếu bạn chắc chắn muốn khóa | nhấn 'b' để quay lại");
         do {
-            option = Integer.parseInt(scanner.nextLine());
-            switch (option) {
-                case 1:
+            choice = scanner.nextLine();
+            switch (choice) {
+                case "y":
                     User userLock = userService.lockUser(userName);
                     System.out.println("Khóa người dùng thành công!!");
                     menuAndDisplay.displayLockUserList();
@@ -396,7 +438,7 @@ public class UserView {
 
                     } while (lockUserCtn != null);
                     break;
-                case 2:
+                case "b":
                     break;
                 default:
                     System.out.println("Nhập không chính xác, vui lòng nhập lại!!");

@@ -10,10 +10,10 @@ import java.util.List;
 
 public class OrderItemService implements IOrderItemService {
     private static final String PATH_FILE_ODER_PRODUCT = "src/data/OrderProduct.csv";
-//    private static final String PATH_PAYMENT = "src/data/payment.csv";
+    private static final String PATH_PAYMENT = "src/data/payment.csv";
 
 
-//    OrderProduct
+    //    OrderProduct
     @Override
     public List<OrderProduct> getOrderService() {
         List<OrderProduct> orderList = new ArrayList<>();
@@ -36,23 +36,24 @@ public class OrderItemService implements IOrderItemService {
     }
 
     @Override
-    public OrderProduct remove(String name) {
+    public OrderProduct remove(int id) {
         List<OrderProduct> orderList = getOrderService();
+        OrderItemService orderItemService = new OrderItemService();
+        OrderProduct orderProduct  = orderItemService.getById(id);
         OrderProduct remove = null;
         for (OrderProduct order : orderList) {
-            if (order.getName().equals(name)) {
+            if (order.getIdProduct() == id) {
                 remove = order;
-                orderList.remove(order);
-                break;
+                orderList.remove(orderProduct);
             }
             try {
                 CSVUtils.writeFile(PATH_FILE_ODER_PRODUCT, orderList);
             } catch (IOException e) {
                 e.printStackTrace();
             }
+            return remove;
         }
-        return remove;
-
+        return null;
     }
 
     @Override
@@ -121,12 +122,12 @@ public class OrderItemService implements IOrderItemService {
     @Override
     public List<OrderProduct> payment() {
         List<OrderProduct> orderList = getOrderService();
-//        List<OrderProduct> payment = getOrderService();
-//        try {
-//            CSVUtils.writeFile(PATH_PAYMENT, payment);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
+        List<OrderProduct> payment = getOrderService();
+        try {
+            CSVUtils.writeFile(PATH_PAYMENT, payment);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         try {
             CSVUtils.writeFile(PATH_FILE_ODER_PRODUCT, orderList);
         } catch (IOException e) {
@@ -134,7 +135,6 @@ public class OrderItemService implements IOrderItemService {
         }
         return orderList;
     }
-
 
 
 //Order
