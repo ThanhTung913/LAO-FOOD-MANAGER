@@ -1,17 +1,15 @@
 package view;
 
-import Utils.ValidateUtils;
-import model.SnackBar;
-import service.SnackBarService;
+import model.Product;
+import service.ProductService;
 
 import java.text.DecimalFormat;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Scanner;
 
 public class ProductMangerView {
     Scanner scanner = new Scanner(System.in);
-    SnackBarService snackBarService = new SnackBarService();
+    ProductService snackBarService = new ProductService();
     DecimalFormat decimalFormat = new DecimalFormat("###,###,###" + " VND");
     MenuAndDisplay menuAndDisplay = new MenuAndDisplay();
 
@@ -61,7 +59,7 @@ public class ProductMangerView {
 
     //    ADDDDDDDDD VÀOOOOOOOOOOOOOOOOO
     public void add() {
-        SnackBar snackBar = new SnackBar();
+        Product snackBar = new Product();
         boolean check = false;
         int id = 0;
         String newNameProduct = null;
@@ -94,7 +92,7 @@ public class ProductMangerView {
         do {      // check name add
             try {
                 check = false;
-                System.out.println("Nhập tên sản phẩm bạn muốn thêm hoặc nhập 'hai' để quay xe ");
+                System.out.println("Nhập tên sản phẩm bạn muốn thêm");
                 System.out.print("==>");
 //                newNameProduct = scanner.nextLine();
                 String temp = scanner.nextLine();
@@ -122,8 +120,6 @@ public class ProductMangerView {
 //                price = Integer.parseInt(scanner.nextLine());
                 String temp = scanner.nextLine();
                 if (temp.equals("hai")) {
-                    System.out.println("|-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-|");
-                    System.out.println("|    NHẤN  'b' ĐỂ THÊM SẢN PHẨM               |");
                     quayXeProduct();
                 }
                 price = Integer.parseInt(temp);
@@ -144,8 +140,6 @@ public class ProductMangerView {
                 System.out.print("==> ");
                 String temp = scanner.nextLine();
                 if (temp.equals("hai")) {
-                    System.out.println("|-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-|");
-                    System.out.println("|    NHẤN  'b' ĐỂ THÊM SẢN PHẨM               |");
                     quayXeProduct();
                 }
                 quantity = Integer.parseInt(temp);
@@ -165,8 +159,6 @@ public class ProductMangerView {
             System.out.println("Thêm mô tả sản phẩm hoặc nhập 'hai' để quay xe ");
             String temp = scanner.nextLine();
             if (temp.equals("hai")) {
-                System.out.println("|-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-|");
-                System.out.println("|    NHẤN  'b' ĐỂ THÊM SẢN PHẨM               |");
                 quayXeProduct();
                 check = false;
             }
@@ -221,7 +213,7 @@ public class ProductMangerView {
                                 System.out.println("Chọn chức năng ");
                                 System.out.print("==> ");
                                 option = Integer.parseInt(scanner.nextLine());
-                                SnackBar snackBar = snackBarService.getById(id);
+                                Product snackBar = snackBarService.getById(id);
                                 switch (option) {
 //                                    case 1:
 ////                                        String temp = scanner.nextLine();
@@ -475,7 +467,7 @@ public class ProductMangerView {
                 System.out.println("ID không hợp lệ, vui lòng nhập lại");
             }
         } while (check = false);
-        snackBarService.lockSnackBar(id);
+        snackBarService.lockProduct(id);
         System.out.println("Khóa sản phẩm thành công!!!");
         menuAndDisplay.disPlayProductLock();
     }
@@ -483,7 +475,7 @@ public class ProductMangerView {
 //            Mở Khóa sản phẩm
     public void unlockProduct() {
         int id;
-        List<SnackBar> userListLock = snackBarService.getLockProduct();
+        List<Product> userListLock = snackBarService.getLockProduct();
         if (userListLock.size() == 0) {
             System.out.println("Hiện không có sản phẩm nào bị khóa");
             System.out.println("Nhấn phím bất kì để quay lại!!!");
@@ -504,7 +496,7 @@ public class ProductMangerView {
                 option = Integer.parseInt(scanner.nextLine());
                 switch (option) {
                     case 1:
-                        SnackBar unlockProduct = snackBarService.unlockSnackBar(id);
+                        Product unlockProduct = snackBarService.unlockProduct(id);
                       menuAndDisplay.disPlayProductLock();
                         System.out.println("Bạn đã mở khóa thành công!!!");
                         break;
@@ -521,10 +513,11 @@ public class ProductMangerView {
     }
 
 
-
     public void quayXeProduct() {
         String choice = null;
         do {
+            System.out.println("|-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-|");
+            System.out.println("|    NHẤN  'b' ĐỂ THÊM SẢN PHẨM               |");
             System.out.println("|          'c' ĐỂ QUAY LẠI QUẢN LÝ SẢN PHẨM   |");
             System.out.println("|          'd' ĐỂ QUAY LẠI ĐĂNG NHẬP          |");
             System.out.println("|          'q' ĐỂ THOÁT CHƯƠNG TRÌNH          |");

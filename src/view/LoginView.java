@@ -2,7 +2,7 @@ package view;
 
 import model.Role;
 import model.User;
-import service.SnackBarService;
+import service.ProductService;
 import service.UserService;
 
 import java.util.Scanner;
@@ -10,7 +10,7 @@ import java.util.Scanner;
 public class LoginView {
     private final UserService USER_SERVICE = new UserService();
     private final MainView MAIN_VIEW = new MainView();
-    private final SnackBarService SNACKBAR_SERVICE = new SnackBarService();
+    private final ProductService SNACKBAR_SERVICE = new ProductService();
     private final OrderProductView ORDER_VIEW = new OrderProductView();
     static Scanner scanner = new Scanner(System.in);
 

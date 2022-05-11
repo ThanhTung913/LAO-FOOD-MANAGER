@@ -2,7 +2,7 @@ package service;
 
 import Utils.CSVUtils;
 import Utils.SortOrderByIdASC;
-import model.OrderProduct;
+import model.OrderItem;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -14,20 +14,29 @@ public class OrderItemService implements IOrderItemService {
 
 
     //    OrderProduct
+    public List<OrderItem> getPayment() {
+        List<OrderItem> listPayment = new ArrayList<>();
+        List<String> records = CSVUtils.readFile(PATH_PAYMENT);
+        for (String record : records) {
+            listPayment.add(new OrderItem(record));
+        }
+        return listPayment;
+    }
+
     @Override
-    public List<OrderProduct> getOrderService() {
-        List<OrderProduct> orderList = new ArrayList<>();
+    public List<OrderItem> getOrderService() {
+        List<OrderItem> orderList = new ArrayList<>();
         List<String> records = CSVUtils.readFile(PATH_FILE_ODER_PRODUCT);
         for (String record : records) {
-            orderList.add(new OrderProduct(record));
+            orderList.add(new OrderItem(record));
         }
         return orderList;
     }
 
     @Override
-    public void add(OrderProduct orderProduct) {
-        List<OrderProduct> orderList = getOrderService();
-        orderList.add(orderProduct);
+    public void add(OrderItem orderItem) {
+        List<OrderItem> orderList = getOrderService();
+        orderList.add(orderItem);
         try {
             CSVUtils.writeFile(PATH_FILE_ODER_PRODUCT, orderList);
         } catch (IOException e) {
@@ -36,12 +45,12 @@ public class OrderItemService implements IOrderItemService {
     }
 
     @Override
-    public OrderProduct remove(int id) {
-        List<OrderProduct> orderList = getOrderService();
+    public OrderItem remove(int id) {
+        List<OrderItem> orderList = getOrderService();
         OrderItemService orderItemService = new OrderItemService();
-        OrderProduct orderProduct  = orderItemService.getById(id);
-        OrderProduct remove = null;
-        for (OrderProduct order : orderList) {
+        OrderItem orderProduct = orderItemService.getById(id);
+        OrderItem remove = null;
+        for (OrderItem order : orderList) {
             if (order.getIdProduct() == id) {
                 remove = order;
                 orderList.remove(orderProduct);
@@ -58,8 +67,8 @@ public class OrderItemService implements IOrderItemService {
 
     @Override
     public boolean checkDuplicateId(int id) {
-        List<OrderProduct> orderList = getOrderService();
-        for (OrderProduct order : orderList) {
+        List<OrderItem> orderList = getOrderService();
+        for (OrderItem order : orderList) {
             if (order.getIdProduct() == id) {
                 return true;
             }
@@ -69,8 +78,8 @@ public class OrderItemService implements IOrderItemService {
 
     @Override
     public boolean checkDuplicateName(String name) {
-        List<OrderProduct> orderList = getOrderService();
-        for (OrderProduct order : orderList) {
+        List<OrderItem> orderList = getOrderService();
+        for (OrderItem order : orderList) {
             if (order.getName().equals(name)) {
                 return true;
             }
@@ -79,9 +88,9 @@ public class OrderItemService implements IOrderItemService {
     }
 
     @Override
-    public OrderProduct getById(int id) {
-        List<OrderProduct> orderList = getOrderService();
-        for (OrderProduct order : orderList) {
+    public OrderItem getById(int id) {
+        List<OrderItem> orderList = getOrderService();
+        for (OrderItem order : orderList) {
             if (order.getIdProduct() == id) {
                 return order;
             }
@@ -92,7 +101,7 @@ public class OrderItemService implements IOrderItemService {
 
     @Override
     public int getIndexById(int id) {
-        List<OrderProduct> orderList = getOrderService();
+        List<OrderItem> orderList = getOrderService();
         for (int i = 0; i < orderList.size(); i++) {
             if (orderList.get(i).getIdProduct() == id) {
                 return i;
@@ -102,9 +111,9 @@ public class OrderItemService implements IOrderItemService {
     }
 
     @Override
-    public OrderProduct getByName(String name) {
-        List<OrderProduct> orderList = getOrderService();
-        for (OrderProduct order : orderList) {
+    public OrderItem getByName(String name) {
+        List<OrderItem> orderList = getOrderService();
+        for (OrderItem order : orderList) {
             if (order.getName().equals(name)) {
                 return order;
             }
@@ -113,16 +122,16 @@ public class OrderItemService implements IOrderItemService {
     }
 
     @Override
-    public List<OrderProduct> sortByIdASC() {
-        List<OrderProduct> orderList = getOrderService();
+    public List<OrderItem> sortByIdASC() {
+        List<OrderItem> orderList = getOrderService();
         orderList.sort(new SortOrderByIdASC());
         return orderList;
     }
 
     @Override
-    public List<OrderProduct> payment() {
-        List<OrderProduct> orderList = getOrderService();
-        List<OrderProduct> payment = getOrderService();
+    public List<OrderItem> payment() {
+        List<OrderItem> orderList = getOrderService();
+        List<OrderItem> payment = getOrderService();
         try {
             CSVUtils.writeFile(PATH_PAYMENT, payment);
         } catch (IOException e) {

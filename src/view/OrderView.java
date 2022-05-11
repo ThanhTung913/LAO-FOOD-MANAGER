@@ -1,10 +1,10 @@
 package view;
 
 import model.Order;
-import model.OrderProduct;
+import model.OrderItem;
 
 public class OrderView {
-    OrderProduct orderProduct = new OrderProduct();
+    OrderItem orderProduct = new OrderItem();
     OrderProductView orderProductView  = new OrderProductView();
     public static void main(String[] args) {
     }

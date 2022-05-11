@@ -250,7 +250,7 @@ public class UserView {
             }
             email = scanner.nextLine();
             if (!ValidateUtils.isEmailValid(email)) {
-                System.out.println("Email không đúng định dạng, vui lòng nhập lại!!!");
+                System.out.println("Email không đúng định dạng, vui lòng nhập lại  (VD: thanhtung@gmail.com)");
             }
         } while (!ValidateUtils.isEmailValid(email));
 
@@ -308,7 +308,7 @@ public class UserView {
 
             phone = scanner.nextLine();
             if (!ValidateUtils.isPhoneValid(phone)) {
-                System.out.println("Số điện thoại không đúng định dạng, vui lòng nhập lại!!!");
+                System.out.println("Số điện thoại không đúng định dạng, vui lòng nhập lại  (VD: 0987654321)");
             }
 
         } while (!ValidateUtils.isPhoneValid(phone));
@@ -327,7 +327,7 @@ public class UserView {
             }
             name = scanner.nextLine();
             if (!ValidateUtils.isNameValid(name)) {
-                System.out.println("Tên không đúng định dạng, vui lòng nhập lại!!!");
+                System.out.println("Tên không đúng định dạng, vui lòng nhập lại (VD: Thanh Tung)");
             }
         } while (!ValidateUtils.isNameValid(name));
 
@@ -345,7 +345,7 @@ public class UserView {
             }
             passWord = scanner.nextLine();
             if (!ValidateUtils.isPasswordValid(passWord)) {
-                System.out.println("Mật khẩu như Tùng, quá yếu, vui lòng nhập lại!!!");
+                System.out.println("Mật khẩu phải có ít nhất 1 chữ in hoa, 1 chữ in thuờng, 1 số và 1 kí tự đặc biệt!!");
             }
         } while (!ValidateUtils.isPasswordValid(passWord));
         return passWord;
@@ -362,7 +362,8 @@ public class UserView {
             }
             useName = scanner.nextLine();
             if (!ValidateUtils.isNameValid(useName)) {
-                System.out.println("Tên không đúng định dạng, vui lòng nhập lại!!!");
+                System.out.println("Tên không đúng định dạng, vui lòng nhập lại (VD: THANHTUNG) ");
+
             }
         } while (!ValidateUtils.isNameValid(useName));
         return useName;
@@ -469,6 +470,9 @@ public class UserView {
         menuAndDisplay.displayListUser();
 
     }
+
+
+
 
 
 }

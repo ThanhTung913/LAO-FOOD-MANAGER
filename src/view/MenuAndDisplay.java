@@ -1,9 +1,9 @@
 package view;
 
 import model.Role;
-import model.SnackBar;
+import model.Product;
 import model.User;
-import service.SnackBarService;
+import service.ProductService;
 import service.UserService;
 
 import java.text.DecimalFormat;
@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class MenuAndDisplay {
-    SnackBarService snackBarService = new SnackBarService();
+    ProductService snackBarService = new ProductService();
     DecimalFormat decimalFormat = new DecimalFormat("###,###,###" + " VND");
     UserService userService = new UserService();
     Scanner scanner = new Scanner(System.in);
@@ -80,12 +80,12 @@ public class MenuAndDisplay {
     }
 
     public void displayProduct() {
-        List<SnackBar> snackBarList = snackBarService.sortSnackbar();
+        List<Product> snackBarList = snackBarService.sortProduct();
         System.out.println("|-------------------------------------------------------------------------------------|");
         System.out.println("|                              DANH SÁCH SẢN PHẨM                                     |");
         System.out.println("|-------------------------------------------------------------------------------------|");
         System.out.printf("%-10s%-25s%-20s%-15s%-15s\n", "ID", "Name", "Giá tiền", "Số lượng", "Mô tả sản phẩm");
-        for (SnackBar snackBar : snackBarList) {
+        for (Product snackBar : snackBarList) {
             System.out.printf("%-10d%-25s%-20s%-15d%-15s\n", snackBar.getId(), snackBar.getName(),
                     decimalFormat.format(snackBar.getPrice()), snackBar.getQuantity(), snackBar.getDetail());
         }
@@ -95,12 +95,12 @@ public class MenuAndDisplay {
 
     // MENU AND DISPLAY MANGER PRODUCT
     public void disPlayProductLock() {
-        List<SnackBar> snackBarList = snackBarService.getLockProduct();
+        List<Product> snackBarList = snackBarService.getLockProduct();
         System.out.println("|-----------------------------------------------------------------------------------------|");
         System.out.println("|                            DANH SÁCH SẢN PHẨM BỊ KHÓA                                   |");
         System.out.println("|-----------------------------------------------------------------------------------------|");
         System.out.printf("%-10s%-25s%-20s%-15s%-15s\n", "ID", "Name", "Giá tiền", "Số lượng", "Mô tả sản phẩm");
-        for (SnackBar snackBar : snackBarList) {
+        for (Product snackBar : snackBarList) {
             System.out.printf("%-10d%-25s%-20s%-15d%-15s\n", snackBar.getId(), snackBar.getName(),
                     decimalFormat.format(snackBar.getPrice()), snackBar.getQuantity(), snackBar.getDetail());
         }
@@ -111,12 +111,12 @@ public class MenuAndDisplay {
         System.out.println("Nhập tên sản phẩm bạn muốn tìm");
         System.out.print("==> ");
         String name = scanner.nextLine();
-        List<SnackBar> searchByName = snackBarService.searchSnackBar(name);
+        List<Product> searchByName = snackBarService.searchSnackBar(name);
         System.out.println("|-------------------------------------------------------------------------------------|");
         System.out.println("|                              DANH SÁCH SẢN PHẨM                                     |");
         System.out.println("|-------------------------------------------------------------------------------------|");
         System.out.printf("%-10s%-25s%-20s%-15s%-15s\n", "ID", "Name", "Giá tiền", "Số lượng", "Mô tả sản phẩm");
-        for (SnackBar snackBar : searchByName) {
+        for (Product snackBar : searchByName) {
             System.out.printf("%-10d%-25s%-20s%-15d%-15s\n", snackBar.getId(), snackBar.getName(),
                     decimalFormat.format(snackBar.getPrice()), snackBar.getQuantity(), snackBar.getDetail());
         }

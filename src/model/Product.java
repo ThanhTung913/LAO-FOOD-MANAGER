@@ -1,8 +1,6 @@
 package model;
 
-import java.time.LocalDate;
-
-public class SnackBar {
+public class Product {
     private int id;
     private String name;
     private int price;
@@ -10,10 +8,10 @@ public class SnackBar {
     private String detail;
 //    private LocalDate create_at;
 
-    public SnackBar() {
+    public Product() {
     }
 
-    public SnackBar(int id, String name, int price, int quantity, String state) {
+    public Product(int id, String name, int price, int quantity, String state) {
         this.id = id;
         this.name = name;
         this.price = price;
@@ -22,7 +20,7 @@ public class SnackBar {
 //        this.create_at = LocalDate.now();
     }
 
-    public SnackBar(String record) {
+    public Product(String record) {
         String[] filder = record.split(",");
         this.id = Integer.parseInt(filder[0]);
         this.name = filder[1];

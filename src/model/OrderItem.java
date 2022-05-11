@@ -1,26 +1,20 @@
 package model;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.util.Date;
-import java.util.Locale;
-
-public class OrderProduct {
+public class OrderItem {
     private int idProduct;
     private int idOrder;
     private String name;
-    private int quantity;
     private int price;
+    private int quantity;
     private int total;
 //    private LocalDate create_at;
 //    private long create_at;
 //    SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 
-    public OrderProduct() {
+    public OrderItem() {
     }
 
-    public OrderProduct(int idOrder, int idProduct, String name, int price, int quantity, int total) {
+    public OrderItem(int idOrder, int idProduct, String name, int price, int quantity, int total) {
 //        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 //        Date date = new Date();
 //        System.out.println(formatter.format(date));
@@ -33,7 +27,7 @@ public class OrderProduct {
 //        this.create_at = LocalDate.now();
     }
 
-    public OrderProduct(int idProduct, String name, int price, int quantity, int total) {
+    public OrderItem(int idProduct, String name, int price, int quantity, int total) {
         this.idProduct = idProduct;
         this.name = name;
         this.price = price;
@@ -41,7 +35,7 @@ public class OrderProduct {
         this.total = total;
     }
 
-    public OrderProduct(String record) {
+    public OrderItem(String record) {
 //        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 //        Date date = new Date();
 //        System.out.println(formatter.format(date));

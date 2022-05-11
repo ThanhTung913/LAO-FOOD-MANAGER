@@ -2,29 +2,29 @@ package service;
 
 import Utils.CSVUtils;
 import Utils.SortProductByIdASC;
-import model.SnackBar;
+import model.Product;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SnackBarService implements ISnackBarService {
+public class ProductService implements IProductService {
     private static final String PATH_FILE_SNACKBAR = "src/data/Product.csv";
     private static final String PATH_FILE_LOCKPRODUCT = "src/data/LockProduct.csv";
 
     @Override
-    public List<SnackBar> getSnackBar() {
-        List<SnackBar> snackBarList = new ArrayList<>();
+    public List<Product> getSnackBar() {
+        List<Product> snackBarList = new ArrayList<>();
         List<String> snackBarPath = CSVUtils.readFile(PATH_FILE_SNACKBAR);
         for (String record : snackBarPath) {
-            snackBarList.add(new SnackBar(record));
+            snackBarList.add(new Product(record));
         }
         return snackBarList;
     }
 
     @Override
-    public void add(SnackBar snackBar) {
-        List<SnackBar> snackBarList = getSnackBar();
+    public void add(Product snackBar) {
+        List<Product> snackBarList = getSnackBar();
         snackBarList.add(snackBar);
         try {
             CSVUtils.writeFile(PATH_FILE_SNACKBAR, snackBarList);
@@ -34,8 +34,8 @@ public class SnackBarService implements ISnackBarService {
     }
 
     @Override
-    public SnackBar getById(int id) {
-        for (SnackBar snackBar : getSnackBar()) {
+    public Product getById(int id) {
+        for (Product snackBar : getSnackBar()) {
             if (snackBar.getId() == id) {
                 return snackBar;
             }
@@ -44,9 +44,9 @@ public class SnackBarService implements ISnackBarService {
     }
 
     @Override
-    public void update(int id, SnackBar snackBar) {
+    public void update(int id, Product snackBar) {
         int index = getIndexById(id);
-        List<SnackBar> snackBarList = getSnackBar();
+        List<Product> snackBarList = getSnackBar();
         snackBarList.remove(index);
         snackBarList.add(index, snackBar);
         try {
@@ -67,12 +67,12 @@ public class SnackBarService implements ISnackBarService {
     }
 
     @Override
-    public SnackBar lockSnackBar(int id) {
+    public Product lockProduct(int id) {
         int index = getIndexById(id);
-        List<SnackBar> snackBarList = getSnackBar();
-        List<SnackBar> snackBarListLock = getLockProduct();
+        List<Product> snackBarList = getSnackBar();
+        List<Product> snackBarListLock = getLockProduct();
         snackBarListLock.add(snackBarList.get(index));
-        SnackBar snackBarRemove = snackBarList.remove(index);
+        Product snackBarRemove = snackBarList.remove(index);
         try {
             CSVUtils.writeFile(PATH_FILE_LOCKPRODUCT, snackBarListLock);
         } catch (Exception e) {
@@ -86,20 +86,20 @@ public class SnackBarService implements ISnackBarService {
         return snackBarRemove;
     }
 
-    public List<SnackBar> getLockProduct() {
-        List<SnackBar> snackBarList = new ArrayList<>();
+    public List<Product> getLockProduct() {
+        List<Product> snackBarList = new ArrayList<>();
         List<String> snackBarListLoc = CSVUtils.readFile(PATH_FILE_LOCKPRODUCT);
         for (String record : snackBarListLoc) {
-            snackBarList.add(new SnackBar(record));
+            snackBarList.add(new Product(record));
         }
         return snackBarList;
     }
 
     @Override
-    public SnackBar unlockSnackBar(int id) {
-        List<SnackBar> userList = getSnackBar();
-        List<SnackBar> userLockList = getLockProduct();
-        for (SnackBar snackBar : userLockList) {
+    public Product unlockProduct(int id) {
+        List<Product> userList = getSnackBar();
+        List<Product> userLockList = getLockProduct();
+        for (Product snackBar : userLockList) {
             if (snackBar.getId() == id) {
                 userList.add(snackBar);
                 userLockList.remove(snackBar);
@@ -120,10 +120,10 @@ public class SnackBarService implements ISnackBarService {
     }
 
     @Override
-    public SnackBar remove(int id) {
+    public Product remove(int id) {
         int index = getIndexById(id);
-        List<SnackBar> snackBarList = getSnackBar();
-        SnackBar snackBarRemove = snackBarList.remove(index);
+        List<Product> snackBarList = getSnackBar();
+        Product snackBarRemove = snackBarList.remove(index);
         try {
             CSVUtils.writeFile(PATH_FILE_SNACKBAR, snackBarList);
         } catch (IOException e) {
@@ -134,14 +134,14 @@ public class SnackBarService implements ISnackBarService {
 
     @Override
     public boolean existId(int id) {
-        List<SnackBar> snackBarList = getSnackBar();
-        List<SnackBar> lockSnackBarList = getLockProduct();
-        for (SnackBar snackBar : snackBarList) {
+        List<Product> snackBarList = getSnackBar();
+        List<Product> lockSnackBarList = getLockProduct();
+        for (Product snackBar : snackBarList) {
             if (snackBar.getId() == id) {
                 return true;
             }
         }
-        for (SnackBar snackBar : lockSnackBarList) {
+        for (Product snackBar : lockSnackBarList) {
             if (snackBar.getId() == id) {
                 return true;
             }
@@ -154,14 +154,14 @@ public class SnackBarService implements ISnackBarService {
 //    }
     @Override
     public boolean checkDuplicateId(int id) {
-        List<SnackBar> snackBarList = getSnackBar();
-        List<SnackBar> lockSnackBarList = getLockProduct();
-        for (SnackBar snackBar : snackBarList) {
+        List<Product> snackBarList = getSnackBar();
+        List<Product> lockSnackBarList = getLockProduct();
+        for (Product snackBar : snackBarList) {
             if (snackBar.getId() == id) {
                 return true;
             }
         }
-        for (SnackBar snackBar : lockSnackBarList) {
+        for (Product snackBar : lockSnackBarList) {
             if (snackBar.getId() == id) {
                 return true;
             }
@@ -171,9 +171,9 @@ public class SnackBarService implements ISnackBarService {
 
     @Override
     public boolean checkDuplicateIdUnlockProduct(int id) {
-        List<SnackBar> snackBarList = getSnackBar();
-        List<SnackBar> lockSnackBarList = getLockProduct();
-        for (SnackBar snackBar : snackBarList) {
+        List<Product> snackBarList = getSnackBar();
+        List<Product> lockSnackBarList = getLockProduct();
+        for (Product snackBar : snackBarList) {
             if (snackBar.getId() == id) {
                 return true;
             }
@@ -183,15 +183,15 @@ public class SnackBarService implements ISnackBarService {
 
     @Override
     public boolean checkDuplicateName(String name) {
-        List<SnackBar> snackBarList = getSnackBar();
-        List<SnackBar> lockSnackBarList = getLockProduct();
+        List<Product> snackBarList = getSnackBar();
+        List<Product> lockSnackBarList = getLockProduct();
 
-        for (SnackBar snackBar : snackBarList) {
+        for (Product snackBar : snackBarList) {
             if (snackBar.getName().equals(name)) {
                 return true;
             }
         }
-        for (SnackBar snackBar : lockSnackBarList) {
+        for (Product snackBar : lockSnackBarList) {
             if (snackBar.getName().equals(name)) {
                 return true;
             }
@@ -200,17 +200,17 @@ public class SnackBarService implements ISnackBarService {
     }
 
     @Override
-    public List<SnackBar> sortSnackbar() {
-        List<SnackBar> snackBarList = getSnackBar();
+    public List<Product> sortProduct() {
+        List<Product> snackBarList = getSnackBar();
         snackBarList.sort(new SortProductByIdASC());
         return snackBarList;
     }
 
     @Override
-    public List<SnackBar> searchSnackBar(String name) {
-        List<SnackBar> snackBarList = getSnackBar();
-        List<SnackBar> searchSnackBar = new ArrayList<>();
-        for (SnackBar snackBar : snackBarList) {
+    public List<Product> searchSnackBar(String name) {
+        List<Product> snackBarList = getSnackBar();
+        List<Product> searchSnackBar = new ArrayList<>();
+        for (Product snackBar : snackBarList) {
             if (snackBar.getName().toLowerCase().contains(name.toLowerCase())) {
                 searchSnackBar.add(snackBar);
             }

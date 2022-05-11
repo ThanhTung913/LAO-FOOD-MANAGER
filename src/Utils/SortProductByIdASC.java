@@ -1,12 +1,12 @@
 package Utils;
 
-import model.SnackBar;
+import model.Product;
 
 import java.util.Comparator;
 
-public class SortProductByIdASC implements Comparator<SnackBar> {
+public class SortProductByIdASC implements Comparator<Product> {
     @Override
-    public int compare(SnackBar o1, SnackBar o2) {
+    public int compare(Product o1, Product o2) {
         if (o1.getId() - o2.getId() > 0) {
             return 1;
         } else if (o1.getId() - o2.getId() < 0) {

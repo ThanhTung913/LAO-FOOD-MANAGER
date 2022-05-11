@@ -6,14 +6,14 @@ import java.util.Scanner;
 
 public class MainView {
     private final IUserService USER_SERVICE;
-    private final ISnackBarService SNACK_BAR_SERVICE;
+    private final IProductService SNACK_BAR_SERVICE;
     private final IOrderItemService ORDER_SERVICE_SERVICE;
 
     MenuAndDisplay menuAndDisplay = new MenuAndDisplay();
 
     public MainView() {
         USER_SERVICE = new UserService();
-        SNACK_BAR_SERVICE = new SnackBarService();
+        SNACK_BAR_SERVICE = new ProductService();
         ORDER_SERVICE_SERVICE = new OrderItemService();
     }
 
@@ -76,6 +76,9 @@ public class MainView {
         int option = -1;
         do {
             try {
+                System.out.println("|-------------------------------------------------------------------------------------------------------|");
+                System.out.println("|                                           ẨM THỰC LÀO - TUNGTP                                        |");
+                System.out.println("|-------------------------------------------------------------------------------------------------------|");
                 menuAndDisplay.mainMenu();
                 System.out.println("Chọn chức năng:");
                 System.out.print("==> ");

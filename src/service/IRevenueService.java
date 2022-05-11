@@ -1,16 +1,16 @@
 package service;
 
-import model.OrderProduct;
+import model.OrderItem;
 
 import java.util.List;
 
 public interface IRevenueService {
 
-    public List<OrderProduct> getAllOrder();
+    public List<OrderItem> getAllOrder();
 
-    List<OrderProduct> getOrderFollowDay();
+    List<OrderItem> getOrderFollowDay();
 
-    List<OrderProduct> getOrderFollowMonth();
+    List<OrderItem> getOrderFollowMonth();
 
     int revenueFollowDay();
 
